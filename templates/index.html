@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phishing URL Detection</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <main class="card">
+    <h1>Phishing URL Detection</h1>
+    <p class="subtitle">Paste a web address to check whether it looks legitimate.
+      The check uses only the URL text; the site is never opened.</p>
+
+    <form method="post" action="{{ url_for('index') }}" class="form">
+      <label for="long_url">URL</label>
+      <input id="long_url" type="text" name="long_url" value="{{ url }}"
+             placeholder="https://www.example.com/login" required maxlength="2048"
+             autocomplete="off" autocapitalize="off" spellcheck="false">
+      <button type="submit" class="btn">Check URL</button>
+    </form>
+
+    {% if error %}
+      <p class="alert error" role="alert">{{ error }}</p>
+    {% endif %}
+
+    {% if result %}
+      {% if result.is_phishing %}
+        <div class="result phishing" role="status">
+          <strong>Phishing / attack URL detected</strong>
+      {% else %}
+        <div class="result legitimate" role="status">
+          <strong>Legitimate URL detected</strong>
+      {% endif %}
+          <span>Phishing probability: {{ "%.1f"|format(result.phishing_probability * 100) }}%</span>
+          <span class="model">Model: {{ config.get('MODEL_LABEL', 'Random Forest') }}</span>
+        </div>
+
+      <details>
+        <summary>Show extracted features</summary>
+        <table class="features">
+          <thead><tr><th>Feature</th><th>Value</th></tr></thead>
+          <tbody>
+          {% for name, value in result.features.items() %}
+            <tr><td>{{ name }}</td><td>{{ value }}</td></tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </details>
+    {% endif %}
+  </main>
+</body>
+</html>
