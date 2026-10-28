@@ -61,7 +61,7 @@ Response:
 }
 ```
 
-## Using your own dataset
+## Using own dataset
 
 The included `data/urls.csv` is **synthetic**. The generator in
 `scripts/generate_sample_data.py` creates URLs that imitate common phishing
@@ -88,7 +88,7 @@ python train.py --data path/to/your_urls.csv
 Check the licence and terms of any dataset you use, and do not publish raw
 phishing URLs.
 
-## Project layout
+##  layout
 
 ```
 phishing_url_detection/
@@ -119,15 +119,6 @@ phishing_url_detection/
 - **URL-only.** Pages that are phishing but use a clean-looking URL can evade
   detection. The report calls this out as a deliberate trade-off for speed and
   safety.
-- **Not a security product.** Treat results as one signal, not a guarantee.
 
-## Source material notes
 
-Parts of the report do not belong to this project. Chapter 5 (LSTM price
-prediction, Bitcoin and Jupyter notebook output) and Chapter 9's Bitcoin
-dataset section appear to come from a different project, so they are not
-implemented here. The literature survey (Chapter 3) is background only.
 
-## Licence
-
-Add your licence here before publishing.
